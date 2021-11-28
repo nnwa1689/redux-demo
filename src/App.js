@@ -1,24 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { addTodo } from './action/todolist'
 
 function App() {
+  const todolist = useSelector(state => state.todoList);
+  const dispatch = useDispatch();
+  const [newTodo, setNewTodo] = useState();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="App">
+        <input value={newTodo} onChange={(e)=>{ setNewTodo(e.target.value); }}></input>
+        <button type="button" onClick={ ()=> {dispatch(addTodo(newTodo));} }>新增</button>
+        {
+          todolist.map(e => (
+            <h1>{ e }</h1>
+          ))
+        }
+      </div>
   );
 }
 
